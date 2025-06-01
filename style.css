@@ -1,0 +1,87 @@
+.main {
+  box-sizing: border-box;
+  background: #bdbdbd;
+  width: 500px;
+  height: 500px;
+  margin: 0px auto;
+  padding: 30px;
+  gap: 10px;
+  border-radius: 16px;
+  display: grid;
+  grid-template:
+    repeat(6, 1fr) /
+    repeat(4, 1fr);
+}
+
+#txt {
+  text-align: right;
+  grid-row: 1 / 2;
+  grid-column: 1 / 5
+}
+
+.number#zero {
+  grid-row: 5 / 6;
+  grid-column: 2 / 3;
+}
+.number#one {
+  grid-row: 4 / 5;
+  grid-column: 1 / 2;
+}
+.number#two {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+}
+.number#three {
+  grid-row: 4 / 5;
+  grid-column: 3 / 4;
+}
+.number#four {
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+}
+.number#five {
+  grid-row: 3 / 4;
+  grid-column: 2 / 3;
+}
+.number#six {
+  grid-row: 3 / 4;
+  grid-column: 3 / 4;
+}
+.number#seven {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+.number#eight {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+.number#nine {
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+}
+
+.operator#plus {
+  grid-row: 2 / 3;
+  grid-column: 4 / 5;
+}
+.operator#minus {
+  grid-row: 3 / 4;
+  grid-column: 4 / 5;
+}
+.operator#multiply {
+  grid-row: 4 / 5;
+  grid-column: 4 / 5;
+}
+.operator#equal {
+  grid-row: 5 / 7;
+  grid-column: 4 / 5;
+}
+
+#dot {
+  grid-row: 5 / 6;
+  grid-column: 1 / 2;
+}
+#clear {
+  grid-row: 6 / 7;
+  grid-column: 1 / 3;
+}
