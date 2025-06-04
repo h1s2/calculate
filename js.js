@@ -14,6 +14,7 @@ const nine = document.getElementById('nine');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
 const multiply = document.getElementById('multiply');
+const division = document.getElementById('division');
 const equal = document.getElementById('equal');
 
 const dot = document.getElementById('dot');
@@ -107,6 +108,20 @@ multiply.addEventListener('click', () => {
   
   txt.value = num1 + sign + num2;
 })
+division.addEventListener('click', () => {
+  if (sign && num2) {
+    calculate();
+  } else if (!sign) {
+    num1 = num2;
+    num2 = '';
+  }
+
+  if (txt.value !== '') {
+    sign = '÷';
+  }
+  
+  txt.value = num1 + sign + num2;
+})
 equal.addEventListener('click', () => {
   if (num1) {
     calculate();
@@ -149,6 +164,15 @@ function calculate() {
   } else if (sign === '×') {
     if (num2) {
       num1 = (Number(num1) * Number(num2)).toFixed(15);
+      num1 = Number(num1);
+    }
+    
+    num2 = '';
+    sign = '';
+
+  } else if (sign === '÷') {
+    if (num2) {
+      num1 = (Number(num1) / Number(num2)).toFixed(15);
       num1 = Number(num1);
     }
     
