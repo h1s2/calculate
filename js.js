@@ -20,164 +20,124 @@ const equal = document.getElementById('equal');
 const dot = document.getElementById('dot');
 const clear = document.getElementById('clear');
 
-let num1 = '';
-let num2 = '';
-let sign = '';
-
 zero.addEventListener('click', () => {
-  num2 += '0';
-  txt.value = num1 + sign + num2;
+  txt.value += '0';
 })
 one.addEventListener('click', () => {
-  num2 += '1';
-  txt.value = num1 + sign + num2;
+  txt.value += '1';
 })
 two.addEventListener('click', () => {
-  num2 += '2';
-  txt.value = num1 + sign + num2;
+  txt.value += '2';
 })
 three.addEventListener('click', () => {
-  num2 += '3';
-  txt.value = num1 + sign + num2;
+  txt.value += '3';
 })
 four.addEventListener('click', () => {
-  num2 += '4';
-  txt.value = num1 + sign + num2;
+  txt.value += '4';
 })
 five.addEventListener('click', () => {
-  num2 += '5';
-  txt.value = num1 + sign + num2;
+  txt.value += '5';
 })
 six.addEventListener('click', () => {
-  num2 += '6';
-  txt.value = num1 + sign + num2;
+  txt.value += '6';
 })
 seven.addEventListener('click', () => {
-  num2 += '7';
-  txt.value = num1 + sign + num2;
+  txt.value += '7';
 })
 eight.addEventListener('click', () => {
-  num2 += '8';
-  txt.value = num1 + sign + num2;
+  txt.value += '8';
 })
 nine.addEventListener('click', () => {
-  num2 += '9';
-  txt.value = num1 + sign + num2;
+  txt.value += '9';
 })
+
 
 plus.addEventListener('click', () => {
-  if (sign && num2) {
-    calculate();
-  } else if (!sign) {
-    num1 = num2;
-    num2 = '';
-  }
-
-  if (txt.value !== '') {
-    sign = '+';
-  }
-  
-  txt.value = num1 + sign + num2;
-  console.log(Number(num1), Number(num2));
+  appendOperator('+');
 })
 minus.addEventListener('click', () => {
-  if (sign && num2) {
-    calculate();
-  } else if (!sign) {
-    num1 = num2;
-    num2 = '';
-  }
-
-  if (txt.value !== '') {
-    sign = '-';
-  }
-  
-  txt.value = num1 + sign + num2;
+  appendOperator('-');
 })
 multiply.addEventListener('click', () => {
-  if (sign && num2) {
-    calculate();
-  } else if (!sign) {
-    num1 = num2;
-    num2 = '';
-  }
-
-  if (txt.value !== '') {
-    sign = '×';
-  }
-  
-  txt.value = num1 + sign + num2;
+  appendOperator('×');
 })
 division.addEventListener('click', () => {
-  if (sign && num2) {
-    calculate();
-  } else if (!sign) {
-    num1 = num2;
-    num2 = '';
-  }
-
-  if (txt.value !== '') {
-    sign = '÷';
-  }
-  
-  txt.value = num1 + sign + num2;
+  appendOperator('÷');
 })
+
+
 equal.addEventListener('click', () => {
-  if (num1) {
-    calculate();
-    num2 = num1;
-    num1 = '';
+  if(lastCharOperator()) return;
 
-    txt.value = num1 + sign + num2;
+  while(/\d+[×÷]\d+/.test(txt.value)) {
+    txt.value = txt.value.replace(/(\-?\d+\.?\d*)([×÷])(\d+\.?\d*)/g, (match, a, operator, b) => {
+
+      let calculate = 0;
+      a = Number(a);
+      b = Number(b);
+
+      if(operator === '×') {
+        calculate = a * b;
+      } else if(operator === '÷') {
+        calculate = a / b;
+      }
+
+      calculate = Number(calculate.toFixed(10));
+
+      console.log(match);
+
+      return String(calculate);
+    });
+  }
+
+  while(/\d+[\+\-]\d+/.test(txt.value)) {
+    txt.value = txt.value.replace(/(\-?\d+\.?\d*)([\+\-])(\d+\.?\d*)/g, (match, a, operator, b) => {
+
+      let calculate = 0;
+      a = Number(a);
+      b = Number(b);
+
+      console.log(match);
+
+      if(operator === '+') {
+        calculate = a + b;
+      } else if(operator === '-') {
+        calculate = a - b;
+      }
+
+      calculate = Number(calculate.toFixed(10));
+
+      console.log(match);
+
+      return String(calculate);
+    });
   }
 })
-
 dot.addEventListener('click', () => {
-  if (num2 !== '' && !num2.includes('.')) {
-    num2 += '.';
+  if(/[\+\-×÷][0-9]*\.[0-9]*?$/.test(txt.value) || /[0-9]*\.[0-9]*?$/.test(txt.value)) {
+    return;
+  } else if(!/\d$/.test(txt.value)) {
+    txt.value += '0';
   }
-  txt.value = num1 + sign + num2;
+
+  txt.value += '.';
 })
 clear.addEventListener('click', () => {
-  num1 = '';
-  num2 = '';
-  sign = '';
   txt.value = '';
 })
 
+function lastCharOperator() {
+  return /[\+\-×÷]$/.test(txt.value)
+}
+function lastCharDot() {
+  return /\.$/.test(txt.value)
+}
+function appendOperator(op) {
+  if(lastCharOperator()) return;
 
-function calculate() {
-  if (sign === '+') {
-    num1 = (Number(num1) + Number(num2)).toFixed(15);
-    num1 = Number(num1);
-    
-    num2 = '';
-    sign = '';
-
-  } else if (sign === '-') {
-    num1 = (Number(num1) - Number(num2)).toFixed(15);
-    num1 = Number(num1);
-    
-    num2 = '';
-    sign = '';
-
-  } else if (sign === '×') {
-    if (num2) {
-      num1 = (Number(num1) * Number(num2)).toFixed(15);
-      num1 = Number(num1);
-    }
-    
-    num2 = '';
-    sign = '';
-
-  } else if (sign === '÷') {
-    if (num2) {
-      num1 = (Number(num1) / Number(num2)).toFixed(15);
-      num1 = Number(num1);
-    }
-    
-    num2 = '';
-    sign = '';
-
+  if(lastCharDot()) {
+    txt.value = txt.value.slice(0, -1);
   }
+
+  txt.value += op;
 }
